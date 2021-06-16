@@ -52,10 +52,14 @@ public class Balkendiagramm_Zufall extends PApplet
     }
 
     public void erzeugeZufallsarray(int laenge) {
-        // ToDo: Neues Array der richtigen Länge erzeugen
-
-        // ToDo: Jedes Element mit einer Zufallszahl belegen
-
+        
+        
+        if(laenge >= 0) {     
+            zahlen = new int[laenge];
+            for(int z=0; z < zahlen.length; z++)    {
+                zahlen[z]=getZufallszahl(0,300);
+                }
+        }
     }
 
     public void zeichneBalken() {
