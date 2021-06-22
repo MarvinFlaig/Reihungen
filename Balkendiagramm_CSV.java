@@ -1,4 +1,3 @@
-
 import processing.core.PApplet;
 import processing.core.PFont;
 import processing.data.Table;
@@ -40,20 +39,30 @@ public class Balkendiagramm_CSV extends PApplet
     @Override
     public void setup()
     {
-        background(0);
+        
         // Schriften laden
         kleineSchrift = createFont("fonts/NotoSans-Medium.ttf", 12); //12 / 26
         grosseSchrift = createFont("fonts/NotoSansDisplay-Medium.ttf",20); //20 /48
    
         // CSV-Datei laden und anzeigen
-        ladeTabelle("data/punkte.csv");
-        zeichneBalken();
+        
+        zeichneBalken(ladeTabelle("data/punkte.csv"));
+       
     }
 
-    public void ladeTabelle(String name) {
+    public int[] ladeTabelle(String name) {
         // Tabelle aus CSV-Datei laden
         Table csv = loadTable(name,"header,csv");
 
+        int[] punkte = new int[csv.getRowCount()];
+        
+        for(int i = 0; i < punkte.length; i++)
+        {
+            punkte[i] = csv.getInt(i + 1, 1);
+        }
+        
+        
+        return punkte;
         // Initialisiere Arrays, in die alle Zeilen der Tabelle passen
         // Die Anzahl der gespeicherten Zeilen bekommt man mit csv.getRowCount()
         //------------
@@ -70,25 +79,32 @@ public class Balkendiagramm_CSV extends PApplet
         //------------  
     }
 
-    public void zeichneBalken() {
+    public void zeichneBalken(int[] zahlen) {
 
+        
+        
         clear();
+        background(255);
 
         // Überschrift
-        fill(255,255,255);
+        fill(0, 0, 0);
         textFont(grosseSchrift);
         text("Punkte", 2, 20);
         textFont(kleineSchrift);  
 
-        // Alle Einträge darstellen
-        // lasse alle Ergebnisse der Spieler in der Form
-        // SpielerXY  234 XXXXXXXXXXXXXXXX
-        // SpielerZY  12  XX
-        // usw.
-        // darstellen. Wandle dazu dein Programm, um die Werte eines Arrays darzustelle ab.
-        //------------
-        // TODO
-        //------------
+        for(int i=0; i < zahlen.length; i++) {
+            // Balkendiagramm zeichnen
+            fill(0, 0, 255);
+            rect(120, 15*i+25, zahlen[i], 13); //2*zahlen[i]
+
+            // Beschriftung
+            fill(0, 0, 0);
+            textFont(kleineSchrift);  
+            text("i="+i, 2, 38+i*15);
+            text("zahlen["+i+"]="+zahlen[i], 30, 38+i*15);
+        }
+        
+        
 
     }
 
