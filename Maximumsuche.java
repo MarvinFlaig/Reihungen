@@ -26,7 +26,9 @@ public class Maximumsuche extends PApplet
     //       untersuchtes Element
     // -------------------------------------------------------------------
     // aktuell groesstes Element
+    int maximum;
     // aktuell untersuchtes Element
+    int akt;
     public int verzoegerung=1000;  // Geschwindigkeit der Ausführung
 
     // Schriften
@@ -106,7 +108,7 @@ public class Maximumsuche extends PApplet
                 zahlen[i] = csv.getInt(i, "Punkte");
                 namen[i] = csv.getString(i, "Name");
             }
-        }
+        } 
     }
 
     /**
@@ -134,6 +136,12 @@ public class Maximumsuche extends PApplet
                 //       position entspricht, muss eine andere Farbe gewählt werden
                 // ----------------------------------------------------------------------
 
+                if (i == maximum)   {
+                
+                    fill(250,0,0);
+                
+                }
+                
                 // Balkendiagramm zeichnen
                 if (zahlen[i]>=0) rect(120, 25+i*15, zahlen[i]+1, 13);
 
@@ -157,9 +165,24 @@ public class Maximumsuche extends PApplet
         //       die Befehle: redraw(); und delay(verzoegerung); ein.
         //       Als Ergebnis soll die Methode die Position des Maximums zurückgeben
         //       Kommentiere die Maximumsuche
+        
+        maximum = 0;
+        
+        for( akt = 1; akt < zahlen.length; akt++)  {
+            redraw();
+            delay(verzoegerung);
+        
+            if (zahlen[akt] > zahlen[maximum])    {
+                maximum = akt;
+                redraw();
+                delay(verzoegerung);
+            }
+            
+        }
+        
         // ------------------------------------------------------------------------------
         //<>//
-        return -1;
+        return maximum;
     }
 
     /**
